@@ -600,7 +600,7 @@ BoxCollider:
   m_LayerOverridePriority: 0
   m_IsTrigger: 0
   m_ProvidesContacts: 0
-  m_Enabled: 0
+  m_Enabled: 1
   serializedVersion: 3
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
@@ -903,8 +903,8 @@ Transform:
   - {fileID: 2053542122}
   - {fileID: 1976444267}
   - {fileID: 1407769849}
-  - {fileID: 330774528}
   - {fileID: 143799940}
+  - {fileID: 330774528}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &807196689
@@ -1157,9 +1157,9 @@ MonoBehaviour:
     m_Bits: 1
   _rampName: Ramp
   _pickupable: Pickupable
-  _boxSize: {x: 1, y: 1, z: 1}
+  _boxSize: {x: 1, y: 2, z: 1}
   _boxForwardOffset: 1
-  _boxVerticalOffset: -1
+  _boxVerticalOffset: 0
 --- !u!54 &1224670948
 Rigidbody:
   m_ObjectHideFlags: 0
