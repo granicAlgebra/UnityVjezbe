@@ -15,23 +15,36 @@ public class ScriptedMovement : MonoBehaviour
 
     private Vector3 _startPosition;
     private Vector3 _velocity;
+    private bool _isOpen;
+
+    private Coroutine _moveCoroutine;
 
     // Start is called before the first frame update
     void Start()
     {
         _startPosition = transform.position;
+        _isOpen = false;
 
         //transform.DOMove(_endPosition, _timeToMove).SetEase(Ease.OutQuint);
         //StartCoroutine(MoveRoutine());
     }
 
-    public void Hodor()
+    public void OpenDoor()
     {
-        StartCoroutine(MoveRoutine());
+        if (_moveCoroutine == null)
+        {
+            _moveCoroutine = StartCoroutine(MoveRoutine());
+        }
+        else
+        {
+            StopCoroutine(_moveCoroutine);
+            _moveCoroutine = StartCoroutine(MoveRoutine());
+        }
     }
 
     private IEnumerator MoveRoutine()
     {
+        _isOpen = !_isOpen;
         float time = 0;
         while (time < _timeToMove)
         {
@@ -39,7 +52,15 @@ public class ScriptedMovement : MonoBehaviour
 
             //transform.position = Vector3.Lerp(_startPosition, _endPosition, time / _timeToMove);
             //transform.position = Vector3.Lerp(_startPosition, _endPosition, CubicIn(time / _timeToMove));
-            transform.position = Vector3.Lerp(_startPosition, _endPosition, _animationCurve.Evaluate(time / _timeToMove));
+            //transform.position = Vector3.Lerp(_startPosition, _endPosition, _animationCurve.Evaluate(time / _timeToMove));
+            if (_isOpen)
+            {
+                transform.position = Vector3.Lerp(transform.position, _startPosition, CubicIn(time / _timeToMove));
+            }
+            else
+            {
+                transform.position = Vector3.Lerp(transform.position, _endPosition, CubicIn(time / _timeToMove));
+            }
 
             yield return null;
         }

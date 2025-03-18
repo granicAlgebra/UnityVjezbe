@@ -2,12 +2,12 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Switch : MonoBehaviour
+public class Switch : MonoBehaviour, Interactable
 {
     [SerializeField] private ScriptedMovement _door;
 
-    public void Hodor()
+    public void InvokeInteraction(Entity entity)
     {
-        _door.Hodor();
+        _door.OpenDoor();
     }
 }
