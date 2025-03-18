@@ -15,14 +15,9 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private string _rampName = "Ramp";
     [SerializeField] private string _pickupable = "Pickupable";
 
-    [SerializeField] private Vector3 _boxSize = Vector3.one;
-    [SerializeField] private float _boxForwardOffset = 1f;
-    [SerializeField] private float _boxVerticalOffset = -1f;
-
     private float _moveHorizontal;
     private float _moveVertical;
     private bool _jump;
-    private bool _pickup;
 
     private RaycastHit[] _hitResults = new RaycastHit[5];
 
@@ -35,20 +30,11 @@ public class PlayerMovement : MonoBehaviour
     {
         GetInput();
         Jump();
-        Pickup();
     }
 
     private void FixedUpdate()
     {
         Move();
-    }
-
-    private void OnTriggerEnter(Collider other)
-    {
-        if (other.CompareTag(_pickupable))
-        {
-            Destroy(other.gameObject);
-        }
     }
 
     private void OnCollisionEnter(Collision collision)
@@ -60,20 +46,11 @@ public class PlayerMovement : MonoBehaviour
         }
     }
 
-    private void OnDrawGizmos()
-    {
-        Vector3 boxPosition = transform.position + (transform.forward * _boxForwardOffset) + (transform.up * _boxVerticalOffset);
-
-        Gizmos.color = Color.green;
-        Gizmos.DrawWireCube(boxPosition, _boxSize);
-    }
-
     private void GetInput()
     {
         _moveHorizontal = Input.GetAxis("Horizontal");
         _moveVertical = Input.GetAxis("Vertical");
         _jump = Input.GetKeyDown(KeyCode.Space);
-        _pickup = Input.GetKeyDown(KeyCode.E);
     }
 
     private void Move()
@@ -100,26 +77,4 @@ public class PlayerMovement : MonoBehaviour
             }
         }
     }
-
-    void Pickup()
-    {
-        if (!_pickup)
-        {
-            return;
-        }
-
-        Vector3 boxPosition = transform.position + (transform.forward * _boxForwardOffset) + (transform.up * _boxVerticalOffset);
-
-        Collider[] hits = Physics.OverlapBox(boxPosition, _boxSize / 2, transform.rotation);
-
-        for (int i = 0; i < hits.Length; i++)
-        { 
-            if (hits[i].CompareTag(_pickupable))
-            {
-                hits[i].GetComponent<Switch>().Hodor();
-                break;
-            }       
-        }
-    }
-
 }
