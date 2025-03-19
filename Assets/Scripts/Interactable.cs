@@ -2,9 +2,6 @@
 using UnityEngine;
 
 public interface Interactable 
-{   
-    public virtual void InvokeInteraction(Entity entity)
-    {
-
-    }
+{
+    public virtual void InvokeInteraction(Entity entity) { }
 }
