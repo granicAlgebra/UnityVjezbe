@@ -126,6 +126,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _paramType: 0
   _amount: 1
+  _SFXprefab: {fileID: 1541026753263090640, guid: 877802cdb6b064c4d9644ff56456e6e5, type: 3}
+  _SFXclip: {fileID: 8300000, guid: 35bc0cdb8edfed6429d01d1617cc6c42, type: 3}
+  _VFXprefab: {fileID: 4444324584370036462, guid: 6413741cd0c6ef34189b12f3d882a20f, type: 3}
 --- !u!65 &3560184970882516334
 BoxCollider:
   m_ObjectHideFlags: 0
