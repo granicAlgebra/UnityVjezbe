@@ -75,7 +75,7 @@ public class PlayerMovement : MonoBehaviour
         dir.y = 0;
         if (dir.sqrMagnitude > 0.01f)
         {
-            _character.rotation = Quaternion.LookRotation(dir, Vector3.up);
+            _character.rotation = Quaternion.Slerp(_character.rotation, Quaternion.LookRotation(dir, Vector3.up), 0.1f);
         }
 
         _rigidBody.rotation *= Quaternion.Euler(0, _mouseHorizontal * _mouseSensivity * Time.deltaTime, 0);

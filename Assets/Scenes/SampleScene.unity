@@ -9315,6 +9315,8 @@ MonoBehaviour:
   _movementForce: 50
   _dragOnGround: 5
   _sprintSpeed: 6
+  _runSpeed: 4
+  _walkSpeed: 1.5
   _jumpVelocity: 7
   _mouseSensivity: 300
   _character: {fileID: 1853796535}
@@ -9444,6 +9446,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _maxMovementSpeed: 6
+  _smooth: 0.15
 --- !u!1 &1228768418
 GameObject:
   m_ObjectHideFlags: 0
