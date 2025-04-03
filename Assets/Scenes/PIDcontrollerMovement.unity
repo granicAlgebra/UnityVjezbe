@@ -954,7 +954,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _rigidBody: {fileID: 1599667437}
   _character: {fileID: 828142153}
-  _maxAddForce: 30
+  _maxAddForce: 50
   _maxSpeed: 5
   kp: 10
   ki: 0.294
