@@ -15,6 +15,7 @@ public class LandMine : MonoBehaviour, Interactable
     [SerializeField] private int _amount;
     // Sila koja se primjenjuje na entitet prilikom eksplozije
     [SerializeField] private float _force;
+    [SerializeField] private float _radius = 1.5f;
     // Prefab AudioSource koji se koristi za reproduciranje zvučnog efekta eksplozije
     [SerializeField] private AudioSource _SFXprefab;
     // AudioClip koji sadrži zvuk eksplozije
@@ -35,7 +36,7 @@ public class LandMine : MonoBehaviour, Interactable
         if (entity != null)
         {
             // Promijeni parametar entiteta (npr. smanji zdravlje)
-            entity.ChangeParam(_paramType, _amount);
+            entity.ChangeParam(_paramType, _amount, transform.position, _radius, _force);
             // Reproduciraj zvučni efekt eksplozije pomoću SFXManagera (Singleton instanca)
             SFXManager.Instance.PlaySFX(_SFXprefab, transform.position, _SFXclip);
             // Reproduciraj vizualni efekt eksplozije pomoću VFXManagera (Singleton instanca)

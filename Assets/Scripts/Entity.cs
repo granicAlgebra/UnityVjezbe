@@ -10,7 +10,7 @@ public class Entity : MonoBehaviour
 {
     // Lista parametara ovog entiteta, gdje svaki element predstavlja pojedini parametar (Tip, Trenutna vrijednost, itd.).
     public List<ParamData> Params;
-
+    public RagdollController Ragdoll;
     /// <summary>
     /// Metoda za dohvaćanje parametra određenog tipa.
     /// Iterira kroz sve elemente u listi Params i vraća onaj čiji tip odgovara zadanom.
@@ -51,6 +51,23 @@ public class Entity : MonoBehaviour
         {
             // Ažuriraj vrijednost parametra dodavanjem proslijeđene vrijednosti
             paramData.SetValue(paramData.Value + value);
+            return true;
+        }
+        return false;
+    }
+
+    public bool ChangeParam(ParamType type, int value, Vector3 forcePositin, float radius, float force)
+    {
+        // Dohvati parametar određenog tipa
+        var paramData = GetParam(type);
+        if (paramData != null)
+        {
+            // Ažuriraj vrijednost parametra dodavanjem proslijeđene vrijednosti
+            paramData.SetValue(paramData.Value + value);
+            if (paramData.Type.Equals(ParamType.Health) && paramData.Value <= 0)
+            {
+                Ragdoll.Die(forcePositin, force, radius);
+            }
             return true;
         }
         return false;

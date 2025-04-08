@@ -36,6 +36,7 @@ public class PlayerMovement : MonoBehaviour
     private bool _jump;
     private bool _wallk;
     private bool _sprint;
+    private bool _attack;
 
     // Polje za spremanje rezultata raycast operacija (optimizacija – smanjuje stvaranje novih objekata)
     private RaycastHit[] _hitResults = new RaycastHit[5];
@@ -55,6 +56,7 @@ public class PlayerMovement : MonoBehaviour
         GetInput(); // Dohvati korisničke ulaze (tipkovnica, miš)
         Jump();     // Provjeri i izvrši skok ako je potrebno
         Rotate();   // Rotiraj igrača na osnovu brzine i pokreta miša
+        Attack();
     }
 
     // FixedUpdate se koristi za fizičke operacije (primjena sile, kretanje)
@@ -90,6 +92,8 @@ public class PlayerMovement : MonoBehaviour
         _wallk = Input.GetKey(KeyCode.LeftAlt);
         // Sprintanje (npr. pritiskom tipke Left Shift)
         _sprint = Input.GetKey(KeyCode.LeftShift);
+
+        _attack = Input.GetMouseButtonDown(0);
     }
 
     // Metoda za rotaciju igrača
@@ -144,6 +148,12 @@ public class PlayerMovement : MonoBehaviour
         {
             _rigidBody.AddForce(direction * _movementForce, ForceMode.Force);
         }
+    }
+
+    private void Attack()
+    {
+        if (_attack)
+            _animationController.PlayAttack();
     }
 
     // Metoda za izvođenje skoka
