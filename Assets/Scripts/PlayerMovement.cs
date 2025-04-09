@@ -56,7 +56,7 @@ public class PlayerMovement : MonoBehaviour
         GetInput(); // Dohvati korisničke ulaze (tipkovnica, miš)
         Jump();     // Provjeri i izvrši skok ako je potrebno
         Rotate();   // Rotiraj igrača na osnovu brzine i pokreta miša
-        Attack();
+        Attack();   // Pokreče animaciju napada ako je user kliknio lijevi gumb na mišu
     }
 
     // FixedUpdate se koristi za fizičke operacije (primjena sile, kretanje)
@@ -92,7 +92,7 @@ public class PlayerMovement : MonoBehaviour
         _wallk = Input.GetKey(KeyCode.LeftAlt);
         // Sprintanje (npr. pritiskom tipke Left Shift)
         _sprint = Input.GetKey(KeyCode.LeftShift);
-
+        // Detekcija za napad (pritsak na lijevu tipku miša)
         _attack = Input.GetMouseButtonDown(0);
     }
 
@@ -149,6 +149,8 @@ public class PlayerMovement : MonoBehaviour
             _rigidBody.AddForce(direction * _movementForce, ForceMode.Force);
         }
     }
+
+    // Pozovi animaciju napada ako je registrian input za napad true
     private void Attack()
     {
         if (_attack)

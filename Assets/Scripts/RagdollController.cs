@@ -1,21 +1,28 @@
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
 
 #if UNITY_EDITOR
+// Ovaj prilagođeni editor omogućava dodavanje dodatnih funkcionalnosti u Inspector za RagdollController komponentu.
 [CustomEditor(typeof(RagdollController))]
 public class RagdollEditor : Editor
 {
+    // Prepisivanje standardne metode za prikazivanje Inspector sučelja.
     public override void OnInspectorGUI()
     {
+        // Iscrtavanje zadanih kontrola u Inspectoru
         DrawDefaultInspector();
-        RagdollController ragdoll = (RagdollController)target;  
 
+        // Dobivanje reference na instancu RagdollController-a koja je trenutno selektirana.
+        RagdollController ragdoll = (RagdollController)target;
+
+        // Ako korisnik klikne gumb, spremi (cache) rigidbody komponente ragdolla.
         if (GUILayout.Button("Cache ragdoll rigidbodies"))
         {
-            ragdoll.CacheRagdollColliders();    
+            ragdoll.CacheRagdollColliders();
         }
+        // Ako korisnik klikne gumb, aktivira ragdoll simulaciju.
         if (GUILayout.Button("Activate Ragdoll"))
         {
             ragdoll.ActivateRagdoll();
@@ -24,56 +31,80 @@ public class RagdollEditor : Editor
 }
 #endif
 
+// Glavna klasa koja upravlja ragdoll efektom na objektu.
 public class RagdollController : MonoBehaviour
 {
-    public Rigidbody MyRigidbody;
-    public AnimationController AC;
-    public Collider MainCollider;
-    public GameObject RagdollRootObject;
-    public List<Rigidbody> RagdollBodies;
+    // Reference na glavnu rigidbody komponentu ovog objekta.
+    [SerializeField] private Rigidbody _myRigidbody;
+    // Reference na kontroler animacija koji upravlja animacijama.
+    [SerializeField] private AnimationController _animationController;
+    // Reference na glavni collider (sudarnik) ovog objekta.
+    [SerializeField] private Collider _mainCollider;
+    // Korijenski GameObject koji sadrži sve dijelove ragdoll modela.
+    [SerializeField] private GameObject _ragdollRootObject;
+    // Lista rigidbody komponenti koje čine dijelove ragdolla.
+    [SerializeField] private List<Rigidbody> _ragdollBodies;
 
+    // Metoda koja se poziva pri inicijalizaciji objekta prije početka igre.
     private void Awake()
     {
+        // Postavljanje svih ragdoll rigidbody komponenata na ne-kinematički način rada (omogućava simulaciju fizike).
         SetRagdollKinematic(false);
     }
 
+    // Metoda kojom se dohvaćaju sve rigidbody komponente unutar ragdoll objekta i spremaju u listu.
     public void CacheRagdollColliders()
     {
-        RagdollRootObject.GetComponentsInChildren(true, RagdollBodies);
+        // Dohvaćanje svih rigidbody komponenata (uključujući i neaktivne) unutar _ragdollRootObject i spremanje u _ragdollBodies listu.
+        _ragdollRootObject.GetComponentsInChildren(true, _ragdollBodies);
     }
 
-
+    // Privatna metoda koja postavlja svojstvo isKinematic za sve rigidbody komponente ragdolla.
     private void SetRagdollKinematic(bool value)
     {
-        for (int i = 0; i < RagdollBodies.Count; i++)
+        // Prolazak kroz sve komponente u listi i postavljanje isKinematic svojstva.
+        for (int i = 0; i < _ragdollBodies.Count; i++)
         {
-            RagdollBodies[i].isKinematic = value;
+            _ragdollBodies[i].isKinematic = value;
         }
     }
 
+    // Metoda koja aktivira ragdoll efekte, isključujući kontrolu animacije i kolizije glavnog objekta.
     public void ActivateRagdoll()
     {
-        MyRigidbody.isKinematic = true;
+        // Onemogućavanje fizike glavnog objekta (postavljanje rigidbody na kinematički način rada).
+        _myRigidbody.isKinematic = true;
 
-        AC.Animator.enabled = false;
+        // Onemogućavanje Animator-a kako bi se isključile animacije.
+        _animationController.Animator.enabled = false;
 
-        MainCollider.enabled = false;
+        // Onemogućavanje glavnog collider-a, tako da sudari ne ometaju ragdoll simulaciju.
+        _mainCollider.enabled = false;
 
+        // Postavljanje svih ragdoll rigidbody komponenata na ne-kinematički način rada, omogućujući simulaciju fizike.
         SetRagdollKinematic(false);
-
     }
 
+    // Metoda koja simulira smrt objektom primjenom sile na dijelove ragdolla.
+    // forcePosition - pozicija u kojoj se primjenjuje sila
+    // force - jačina sile
+    // radius - radijus unutar kojeg se sila primjenjuje
     public void Die(Vector3 forcePosition, float force, float radius)
     {
+        // Prvo aktiviraj ragdoll simulaciju.
         ActivateRagdoll();
 
-        for (int i = 0; i < RagdollBodies.Count; i++)
+        // Prolaz kroz sve rigidbody komponente u ragdoll listi.
+        for (int i = 0; i < _ragdollBodies.Count; i++)
         {
-            Vector3 dist = RagdollBodies[i].position - forcePosition;   
+            // Izračunaj udaljenost između trenutne komponente i pozicije primjene sile.
+            Vector3 dist = _ragdollBodies[i].position - forcePosition;
             float magnitude = dist.magnitude;
+            // Ako je objekt unutar zadanog radijusa...
             if (magnitude < radius)
             {
-                RagdollBodies[i].AddForce((1 - (magnitude / radius)) * force * dist, ForceMode.Impulse);    
+                // Primijeni impulsnu silu proporcionalnu udaljenosti (manja udaljenost = veći udar) na taj rigidbody.
+                _ragdollBodies[i].AddForce((1 - (magnitude / radius)) * force * dist, ForceMode.Impulse);
             }
         }
     }

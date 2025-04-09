@@ -65,8 +65,11 @@ public class Entity : MonoBehaviour
         {
             // Ažuriraj vrijednost parametra dodavanjem proslijeđene vrijednosti
             paramData.SetValue(paramData.Value + value);
+
+            // Ako se mijenja Health parametar i vrijednost postane 0, pokušaj aktivirati ragdoll
             if (paramData.Type.Equals(ParamType.Health) && paramData.Value == 0)
             {
+                // Provjera da li referenca Ragdoll nije null prije poziva metode Die
                 Ragdoll.Die(forcePosition, force, radius);
             }
             return true;

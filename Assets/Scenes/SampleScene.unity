@@ -10564,11 +10564,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 58f6f559d6e9ff2499860102a17be691, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  MyRigidbody: {fileID: 1224670948}
-  AC: {fileID: 1224670955}
-  MainCollider: {fileID: 1224670949}
-  RagdollRootObject: {fileID: 1853796534}
-  RagdollBodies:
+  _myRigidbody: {fileID: 1224670948}
+  _animationController: {fileID: 1224670955}
+  _mainCollider: {fileID: 1224670949}
+  _ragdollRootObject: {fileID: 1853796534}
+  _ragdollBodies:
   - {fileID: 1286633530}
   - {fileID: 883222234}
   - {fileID: 741530686}
