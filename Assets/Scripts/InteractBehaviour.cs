@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System.Collections;
+using UnityEngine;
 
 /// <summary>
 /// InteractBehaviour omogućava interakciju s objektima unutar određenog volumena (box) u sceni.
@@ -15,6 +16,9 @@ public class InteractBehaviour : MonoBehaviour
     [SerializeField] private float _boxForwardOffset = 1f;
     // Vertikalni pomak kutije od trenutne pozicije objekta (npr. malo niže).
     [SerializeField] private float _boxVerticalOffset = -1f;
+
+    [SerializeField] private IKcontroller _IKcontroller;
+    [SerializeField] private PlayerMovement _playerMovement;
 
     /// <summary>
     /// OnDrawGizmos se koristi za vizualizaciju kutije u Editoru.
@@ -64,15 +68,39 @@ public class InteractBehaviour : MonoBehaviour
         for (int i = 0; i < hits.Length; i++)
         {
             // Pokušaj dohvatiti komponentu koja implementira sučelje Interactable s trenutnog collidera.
-            var interactable = hits[i].GetComponent<Interactable>();
+            Interactable interactable = hits[i].GetComponent<Interactable>();
 
             // Ako komponenta postoji (objekt je interaktivan), pozovi metodu InvokeInteraction, prosljeđujući entitet koji inicira interakciju.
             if (interactable != null)
             {
-                interactable.InvokeInteraction(_entity);
+                StartCoroutine(InteractCoroutine(hits[i].transform.position, interactable));
                 // Nakon prve uspješne interakcije, prekini daljnju pretragu.
                 break;
             }
         }
+    }
+
+    private IEnumerator InteractCoroutine(Vector3 position, Interactable interactable)
+    {
+        float timeToInteract = 0;
+        _playerMovement.enabled = false;
+        while (timeToInteract < 1)
+        {
+            _IKcontroller.MoveRightHand(position, timeToInteract);
+            timeToInteract += Time.deltaTime;
+            yield return null;
+        }
+
+        interactable.InvokeInteraction(_entity);
+        yield return new WaitForSeconds(0.5f);
+        timeToInteract = 1;
+
+        while (timeToInteract > 0)
+        {
+            _IKcontroller.MoveRightHand(position, timeToInteract);
+            timeToInteract -= Time.deltaTime;
+            yield return null;
+        }
+        _playerMovement.enabled = true;
     }
 }

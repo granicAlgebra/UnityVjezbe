@@ -35,7 +35,7 @@ public class LandMine : MonoBehaviour, Interactable
         if (entity != null)
         {
             // Promijeni parametar entiteta (npr. smanji zdravlje)
-            entity.ChangeParam(_paramType, _amount);
+            entity.ChangeParam(_paramType, _amount, transform.position, _force, 1);
             // Reproduciraj zvučni efekt eksplozije pomoću SFXManagera (Singleton instanca)
             SFXManager.Instance.PlaySFX(_SFXprefab, transform.position, _SFXclip);
             // Reproduciraj vizualni efekt eksplozije pomoću VFXManagera (Singleton instanca)

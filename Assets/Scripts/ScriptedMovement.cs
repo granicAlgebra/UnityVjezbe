@@ -38,7 +38,7 @@ public class ScriptedMovement : MonoBehaviour
         // Spremi trenutnu poziciju objekta kao početnu poziciju
         _startPosition = transform.position;
         // Inicijalno stanje postavimo na zatvoreno (false)
-        _isOpen = false;
+        _isOpen = true;
 
         // Primjeri korištenja DOTween tweeninga (zakomentirano):
         // transform.DOMove(_endPosition, _timeToMove).SetEase(Ease.OutQuint);
