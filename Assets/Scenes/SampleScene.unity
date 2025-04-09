@@ -5794,7 +5794,7 @@ Transform:
   m_GameObject: {fileID: 638726067}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 3.17, z: 1.69}
+  m_LocalPosition: {x: 0, y: 2.99, z: 1.69}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -10371,8 +10371,8 @@ GameObject:
   - component: {fileID: 1224670949}
   - component: {fileID: 1224670948}
   - component: {fileID: 1224670957}
-  - component: {fileID: 1224670956}
   - component: {fileID: 1224670947}
+  - component: {fileID: 1224670958}
   - component: {fileID: 1224670955}
   - component: {fileID: 1224670953}
   - component: {fileID: 1224670954}
@@ -10402,7 +10402,7 @@ MonoBehaviour:
   _sprintSpeed: 6
   _runSpeed: 4
   _walkSpeed: 1.5
-  _jumpVelocity: 7
+  _jumpVelocity: 300
   _mouseSensivity: 300
   _character: {fileID: 1853796535}
   _layerMaskJump:
@@ -10501,7 +10501,7 @@ MonoBehaviour:
     OnValueChange:
       m_PersistentCalls:
         m_Calls: []
-  Ragdoll: {fileID: 1224670956}
+  Ragdoll: {fileID: 1224670958}
 --- !u!114 &1224670954
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -10534,34 +10534,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _maxMovementSpeed: 6
   _smooth: 0.15
---- !u!114 &1224670956
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1224670946}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 49c14edbbc70cc848bf4800ac44d89b5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  MyRigidbody: {fileID: 1224670948}
-  AC: {fileID: 1224670955}
-  MainCollider: {fileID: 1224670949}
-  RagdollRootObject: {fileID: 1853796534}
-  RagdollRigidbodies:
-  - {fileID: 1286633530}
-  - {fileID: 883222234}
-  - {fileID: 741530686}
-  - {fileID: 1286633531}
-  - {fileID: 302770978}
-  - {fileID: 908462508}
-  - {fileID: 350677880}
-  - {fileID: 419443153}
-  - {fileID: 1011899136}
-  - {fileID: 2063524538}
-  - {fileID: 1656289725}
+  _blendDuration: 0.2
 --- !u!114 &1224670957
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -10579,6 +10552,35 @@ MonoBehaviour:
   _headLook: {fileID: 358363736}
   _handIK: {fileID: 151543154}
   _smoothHead: 5
+--- !u!114 &1224670958
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1224670946}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 58f6f559d6e9ff2499860102a17be691, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  MyRigidbody: {fileID: 1224670948}
+  AC: {fileID: 1224670955}
+  MainCollider: {fileID: 1224670949}
+  RagdollRootObject: {fileID: 1853796534}
+  RagdollBodies:
+  - {fileID: 1286633530}
+  - {fileID: 883222234}
+  - {fileID: 741530686}
+  - {fileID: 1286633531}
+  - {fileID: 302770978}
+  - {fileID: 908462508}
+  - {fileID: 350677880}
+  - {fileID: 419443153}
+  - {fileID: 1011899136}
+  - {fileID: 2063524538}
+  - {fileID: 1656289725}
+  - {fileID: 728214578}
 --- !u!1 &1228768418
 GameObject:
   m_ObjectHideFlags: 0

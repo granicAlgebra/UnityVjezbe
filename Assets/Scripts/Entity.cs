@@ -10,7 +10,7 @@ public class Entity : MonoBehaviour
 {
     // Lista parametara ovog entiteta, gdje svaki element predstavlja pojedini parametar (Tip, Trenutna vrijednost, itd.).
     public List<ParamData> Params;
-    public GenericRagdoll Ragdoll;
+    public RagdollController Ragdoll;
 
     /// <summary>
     /// Metoda za dohvaćanje parametra određenog tipa.

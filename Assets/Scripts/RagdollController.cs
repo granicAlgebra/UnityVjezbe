@@ -55,7 +55,7 @@ public class RagdollController : MonoBehaviour
     {
         MyRigidbody.isKinematic = true;
 
-        AC.MyAnimator.enabled = false;
+        AC.Animator.enabled = false;
 
         MainCollider.enabled = false;
 

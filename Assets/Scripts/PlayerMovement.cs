@@ -155,12 +155,6 @@ public class PlayerMovement : MonoBehaviour
             _animationController.PlayAttack();
     }
 
-    private void Attack()
-    {
-        if (_attack)
-            _animationController.PlayAttack();
-    }
-
     // Metoda za izvođenje skoka
     private void Jump()
     {
