@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using Cinemachine;
+using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour
 {
@@ -6,6 +7,10 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private Rigidbody _rigidBody;
     // Referenca na AnimationController za upravljanje animacijama
     [SerializeField] private AnimationController _animationController;
+
+    [SerializeField] private CinemachineVirtualCamera _aimCamera;
+    [SerializeField] private GameObject _aimUI;
+
     // Sila koja se primjenjuje pri kretanju igrača
     [SerializeField] private float _movementForce = 50f;
     // Vrijednost drag-a (otpora) kada je igrač na tlu
@@ -37,6 +42,7 @@ public class PlayerMovement : MonoBehaviour
     private bool _wallk;
     private bool _sprint;
     private bool _attack;
+    private bool _isAiming;
 
     // Polje za spremanje rezultata raycast operacija (optimizacija – smanjuje stvaranje novih objekata)
     private RaycastHit[] _hitResults = new RaycastHit[5];
@@ -54,6 +60,7 @@ public class PlayerMovement : MonoBehaviour
     private void Update()
     {
         GetInput(); // Dohvati korisničke ulaze (tipkovnica, miš)
+        Aiming();
         Jump();     // Provjeri i izvrši skok ako je potrebno
         Rotate();   // Rotiraj igrača na osnovu brzine i pokreta miša
         Attack();   // Pokreče animaciju napada ako je user kliknio lijevi gumb na mišu
@@ -94,6 +101,21 @@ public class PlayerMovement : MonoBehaviour
         _sprint = Input.GetKey(KeyCode.LeftShift);
         // Detekcija za napad (pritsak na lijevu tipku miša)
         _attack = Input.GetMouseButtonDown(0);
+        _isAiming = Input.GetMouseButton(1);
+    }
+
+    private void Aiming()
+    {
+        if (_isAiming)
+        {
+            _aimCamera.Priority = 12;
+            _aimUI.SetActive(true);
+        }
+        else
+        {
+            _aimCamera.Priority = 0;
+            _aimUI.SetActive(false);
+        }
     }
 
     // Metoda za rotaciju igrača

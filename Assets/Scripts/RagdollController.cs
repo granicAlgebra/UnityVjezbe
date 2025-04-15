@@ -44,6 +44,8 @@ public class RagdollController : MonoBehaviour
     [SerializeField] private GameObject _ragdollRootObject;
     // Lista rigidbody komponenti koje čine dijelove ragdolla.
     [SerializeField] private List<Rigidbody> _ragdollBodies;
+    [SerializeField] private Transform _modelRoot;
+   
 
     // Metoda koja se poziva pri inicijalizaciji objekta prije početka igre.
     private void Awake()
@@ -81,6 +83,8 @@ public class RagdollController : MonoBehaviour
         // Onemogućavanje glavnog collider-a, tako da sudari ne ometaju ragdoll simulaciju.
         _mainCollider.enabled = false;
 
+        _modelRoot.parent = null;
+
         // Postavljanje svih ragdoll rigidbody komponenata na ne-kinematički način rada, omogućujući simulaciju fizike.
         SetRagdollKinematic(false);
     }
@@ -94,6 +98,7 @@ public class RagdollController : MonoBehaviour
         // Prvo aktiviraj ragdoll simulaciju.
         ActivateRagdoll();
 
+        Debug.Log(force);
         // Prolaz kroz sve rigidbody komponente u ragdoll listi.
         for (int i = 0; i < _ragdollBodies.Count; i++)
         {

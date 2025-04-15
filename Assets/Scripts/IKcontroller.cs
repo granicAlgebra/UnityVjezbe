@@ -41,7 +41,7 @@ public class IKcontroller : MonoBehaviour
             _stareTarget = target;
         }
         // Ako se traži prekid gledanja, a trenutni cilj odgovara proslijeđenom targetu, poništavamo _stareTarget
-        else if (_stareTarget != null && _stareTarget.Equals(target))
+        else if (_stareTarget != null || _stareTarget.Equals(target))
         {
             _stareTarget = null;
         }
