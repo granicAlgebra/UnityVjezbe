@@ -1,4 +1,5 @@
 ﻿using Cinemachine;
+using DG.Tweening;
 using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour
@@ -28,6 +29,9 @@ public class PlayerMovement : MonoBehaviour
     // Transform referenca na lik (karakter) koji se rotira
     [SerializeField] private Transform _character;
 
+    [SerializeField] private Transform _weaponHitCheckPosition;
+    [SerializeField] private LayerMask _enemyLayer;
+
     // Layer maska koja se koristi za provjeru kontakta s tlom (skakanje)
     [SerializeField] private LayerMask _layerMaskJump;
 
@@ -43,6 +47,7 @@ public class PlayerMovement : MonoBehaviour
     private bool _sprint;
     private bool _attack;
     private bool _isAiming;
+    private Tween _attackTween;
 
     // Polje za spremanje rezultata raycast operacija (optimizacija – smanjuje stvaranje novih objekata)
     private RaycastHit[] _hitResults = new RaycastHit[5];
@@ -177,6 +182,25 @@ public class PlayerMovement : MonoBehaviour
     {
         if (_attack)
             _animationController.PlayAttack();
+
+        //if (_attackTween != null && _attackTween.active)
+        //{
+        //    return;
+        //}
+
+        //_attackTween = DOVirtual.DelayedCall(0.15f, () => {
+        //    var hits = Physics.OverlapSphere(_weaponHitCheckPosition.position, 1, _enemyLayer);
+
+        //    for (int i = 0; i < hits.Length; i++)
+        //    {
+        //        if (hits[i].TryGetComponent<Entity>(out Entity component))
+        //        {
+        //            component.ChangeParam(ParamType.Health, -30);
+        //            break;
+        //        }
+        //    }
+        //    _attackTween = null;
+        //});
     }
 
     // Metoda za izvođenje skoka
