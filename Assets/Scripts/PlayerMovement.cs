@@ -127,7 +127,7 @@ public class PlayerMovement : MonoBehaviour
     private void Rotate()
     {
         // Izračunaj smjer kretanja na temelju trenutne brzine (normalizirano)
-        Vector3 dir = _rigidBody.velocity.normalized;
+        Vector3 dir = _rigidBody.linearVelocity.normalized;
         dir.y = 0; // Isključi vertikalnu komponentu kako bi se rotacija dogodila samo u horizontalnoj ravnini
         if (dir.sqrMagnitude > 0.01f)
         {
@@ -161,17 +161,17 @@ public class PlayerMovement : MonoBehaviour
         {
             // Ako je igrač na tlu, aktiviraj animaciju pada i postavi drag
             _animationController.Falling(true);
-            _rigidBody.drag = _dragOnGround;
+            _rigidBody.linearDamping = _dragOnGround;
         }
         else
         {
             // Ako igrač nije na tlu, deaktiviraj animaciju pada i ukloni drag
             _animationController.Falling(false);
-            _rigidBody.drag = 0;
+            _rigidBody.linearDamping = 0;
         }
 
         // Ako je trenutna brzina manja od maksimalne, primijeni dodatnu silu u smjeru kretanja
-        if (_rigidBody.velocity.magnitude < maxSpeed)
+        if (_rigidBody.linearVelocity.magnitude < maxSpeed)
         {
             _rigidBody.AddForce(direction * _movementForce, ForceMode.Force);
         }

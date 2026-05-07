@@ -95,7 +95,7 @@ public class MoveWithPid : MonoBehaviour
     private void Rotate()
     {
         // Dobij trenutni smjer kretanja, zanemarujući vertikalnu komponentu
-        Vector3 dir = _rigidBody.velocity.normalized;
+        Vector3 dir = _rigidBody.linearVelocity.normalized;
         dir.y = 0;
 
         // Ako je brzina dovoljno velika, postavi novu rotaciju karaktera
@@ -125,9 +125,9 @@ public class MoveWithPid : MonoBehaviour
         inputDirection.Normalize();
 
         // Izračunavamo trenutnu horizontalnu brzinu (bez vertikalne komponente)
-        Vector3 horizontalVelocity = new Vector3(_rigidBody.velocity.x, 0, _rigidBody.velocity.z);
+        Vector3 horizontalVelocity = new Vector3(_rigidBody.linearVelocity.x, 0, _rigidBody.linearVelocity.z);
         // Spremljiva brzina objekta (uključujući sve komponente) - koristi se za PID kalkulaciju
-        _speed = _rigidBody.velocity.magnitude;
+        _speed = _rigidBody.linearVelocity.magnitude;
 
         // PID kontrola: Izračunavamo pogrešku kao razliku između željene brzine i trenutne brzine
         float error = maxSpeed - _speed;

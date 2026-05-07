@@ -62,7 +62,7 @@ public class AnimationController : MonoBehaviour
         // Ako _rigidBody postoji, proslijedi njegovu trenutnu brzinu metodi Move.
         if (_rigidBody != null)
         {
-            Move(_rigidBody.velocity.magnitude);
+            Move(_rigidBody.linearVelocity.magnitude);
         }
     }
 
